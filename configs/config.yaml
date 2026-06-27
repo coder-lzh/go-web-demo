@@ -23,9 +23,9 @@ database:
 log:
   level: info
   format: json   # json, text
-  file_path: logs/app.log
-  max_size: 100  # MB
-  max_backups: 10
-  max_age: 30    # 天
-  compress: false
-  console: true
+  file_path: logs/app.log # 日志文件路径
+  max_size: 100  # 单个文件最大大小(MB)
+  max_backups: 10 # 保留备份文件数
+  max_age: 30    # 保留天数
+  compress: false # 是否压缩备份
+  console: true # 是否打印控制台

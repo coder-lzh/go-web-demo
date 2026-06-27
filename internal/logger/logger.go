@@ -6,6 +6,7 @@ import (
 
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
+	"gopkg.in/natefinch/lumberjack.v2"
 )
 
 var (
@@ -73,14 +74,30 @@ func Init(cfg *Config) error {
 		encoder = zapcore.NewJSONEncoder(encoderConfig)
 	}
 
-	core := zapcore.NewCore(
-		encoder,
-		zapcore.AddSync(os.Stdout),
-		level,
-	)
+	var cores []zapcore.Core
+
+	if cfg.Console {
+		cores = append(cores, zapcore.NewCore(encoder, zapcore.AddSync(os.Stdout), level))
+	}
 
 	if cfg.FilePath != "" {
-		core = zapcore.NewTee(core)
+		fileWriter := zapcore.AddSync(&lumberjack.Logger{
+			Filename:   cfg.FilePath,
+			MaxSize:    cfg.MaxSize,
+			MaxBackups: cfg.MaxBackups,
+			MaxAge:     cfg.MaxAge,
+			Compress:   cfg.Compress,
+		})
+		cores = append(cores, zapcore.NewCore(encoder, fileWriter, level))
+	}
+
+	var core zapcore.Core
+	if len(cores) == 0 {
+		core = zapcore.NewCore(encoder, zapcore.AddSync(os.Stdout), level)
+	} else if len(cores) == 1 {
+		core = cores[0]
+	} else {
+		core = zapcore.NewTee(cores...)
 	}
 
 	log = zap.New(core, zap.AddStacktrace(zapcore.ErrorLevel))

@@ -4,11 +4,6 @@ server:
   mode: release  # 生产环境关闭调试
 
 database:
-  host: 10.0.1.100
-  username: prod_user
-  password: Prod@2026#Secure
-  database: xinxiang_prod
-
-log:
-  level: error  # 生产环境只记录错误
-  file_path: /var/log/xinxiang/app.log
+  host: 127.0.0.1
+  password: 123456
+  database: db_sass
