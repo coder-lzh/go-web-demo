@@ -1,0 +1,28 @@
+# 基础通用配置
+app:
+  name: xinxiang-system
+  version: 1.0.0
+
+server:
+  port: 8080
+  mode: release
+
+database:
+  host: localhost
+  port: 3306
+  username: root
+  password: 123456
+  database: xinxiang
+  charset: utf8mb4
+  loc: Local
+  log_mode: false
+  max_idle_conns: 10
+  max_open_conns: 100
+  conn_max_lifetime: 3600
+
+log:
+  level: info
+  file_path: logs/app.log
+  max_size: 100  # MB
+  max_backups: 10
+  max_age: 30    # 天

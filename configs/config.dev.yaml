@@ -1,0 +1,12 @@
+# 开发环境 - 只覆盖需要不同的配置
+server:
+  port: 8080
+  mode: debug  # 开发环境开启调试
+
+database:
+  host: 127.0.0.1
+  password: 123456
+  database: db_sass
+
+log:
+  level: debug  # 开发环境输出更多日志
