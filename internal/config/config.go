@@ -35,10 +35,13 @@ type DatabaseConfig struct {
 
 type LogConfig struct {
 	Level      string `mapstructure:"level" json:"level"`
+	Format     string `mapstructure:"format" json:"format"` // json, text
 	FilePath   string `mapstructure:"file_path" json:"file_path"`
 	MaxSize    int    `mapstructure:"max_size" json:"max_size"`
 	MaxBackups int    `mapstructure:"max_backups" json:"max_backups"`
 	MaxAge     int    `mapstructure:"max_age" json:"max_age"`
+	Compress   bool   `mapstructure:"compress" json:"compress"`
+	Console    bool   `mapstructure:"console" json:"console"`
 }
 
 type Config struct {

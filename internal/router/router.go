@@ -5,14 +5,17 @@ import (
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/server"
-	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 
 	"go-web-demo/internal/config"
 	"go-web-demo/internal/handler"
+	"go-web-demo/internal/logger"
+	"go-web-demo/internal/middleware"
 )
 
 func SetupRoutes(h *server.Hertz, cfg *config.Config) {
+	h.Use(middleware.Logging())
+
 	h.GET("/ping", pingHandler(cfg))
 	h.GET("/config", configHandler(cfg))
 
@@ -26,7 +29,7 @@ func SetupRoutes(h *server.Hertz, cfg *config.Config) {
 		userGroup.GET("/list", handler.GetUserHandler().GetList)
 	}
 
-	hlog.Infof("Server listening on %s:%d", cfg.Server.Host, cfg.Server.Port)
+	logger.Infof("Server listening on %s:%d", cfg.Server.Host, cfg.Server.Port)
 }
 
 func pingHandler(cfg *config.Config) func(c context.Context, ctx *app.RequestContext) {

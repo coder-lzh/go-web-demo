@@ -2,6 +2,7 @@ package handler
 
 import (
 	"context"
+	"go-web-demo/internal/logger"
 	"strconv"
 
 	"github.com/cloudwego/hertz/pkg/app"
@@ -84,6 +85,8 @@ func (h *UserHandler) GetByID(c context.Context, ctx *app.RequestContext) {
 		ctx.JSON(consts.StatusNotFound, response.Fail(consts.StatusNotFound, err.Error()))
 		return
 	}
+
+	logger.Info("GetByID 查询用户 userId:%s", idStr)
 
 	ctx.JSON(consts.StatusOK, response.Success(user))
 }

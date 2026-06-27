@@ -17,6 +17,8 @@ func main() {
 		return
 	}
 
+	app.InitTracer()
+
 	if err := app.InitDatabase(cfg); err != nil {
 		fmt.Printf("Init database failed: %v\n", err)
 		return
